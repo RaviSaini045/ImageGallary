@@ -1,44 +1,62 @@
 import { useState } from "react";
-
+import { Form, Input, Upload as AntUpload, Button } from "antd";
 
 const Upload = () => {
-    
-    const [title, setTtitle] = useState("")
-    const [imageFile, setImageFile] = useState(null)
+  const [title, setTitle] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
-    const handleSubmit = (e) => {
-        // image upload 
+  const handleSubmit = (values) => {
+    console.log("Form Data:", values);
+    alert("Image uploaded successfully!");
+  };
+
+  const handleFileChange = (info) => {
+    const file = info.file.originFileObj;
+    if (file) {
+      setImageFile(file);
     }
-    
-    const handleChange = (e) => {
-        setTtitle(e.target.value);
-    }
-    
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setImageFile(file);
-        }
-    };    
-    return (
-        <>
-          <div>
-             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Title</label>
-                    <input type="text" required onChange={handleChange} />
-                </div>
-                <div>
-                    <label>Image File</label>
-                    <input type="image" capture="environment" required onChange={handleFileChange} />
-                </div>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-             </form>
-          </div>
-        </>
-    )
-}
+  };
+
+  return (
+    <div style={{ padding: "20px", maxWidth: "400px", margin: "0 auto" }}>
+      <h2 style={{ textAlign: "center" }}>Upload Image</h2>
+      <Form onFinish={handleSubmit}>
+        <Form.Item
+          label="Title"
+          name="title"
+          rules={[
+            { required: true, message: "Please enter a title" },
+          ]}
+        >
+          <Input
+            placeholder="Enter image title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Image File"
+          name="imageFile"
+          rules={[
+            { required: true, message: "Please upload an image" },
+          ]}
+        >
+          <AntUpload
+            beforeUpload={() => false}
+            onChange={handleFileChange}
+            maxCount={1}
+          >
+            <Button>Select File</Button>
+          </AntUpload>
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block> Submit </Button>
+        </Form.Item>
+
+      </Form>
+    </div>
+  );
+};
 
 export default Upload;

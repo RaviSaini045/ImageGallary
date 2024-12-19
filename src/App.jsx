@@ -3,7 +3,10 @@ import './App.css'
 import Navbar from './components/Navbar'
 import {Route, Routes} from 'react-router-dom'
 import Search from './pages/Search'
-import { Upload } from 'antd'
+import Upload from './pages/Upload'
+import Home from './pages/Home'
+import ImageViewer from './components/ImageViewer'
+import Popup from './components/Popup'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,7 +14,7 @@ function App() {
   return (
     <>
       <Navbar/>
-      <Routes>
+      {/* <Routes>
         <Route 
           path="/" 
           element={<Home/>} 
@@ -24,7 +27,12 @@ function App() {
           path="/upload"
           element={<Upload/>}
         />
-      </Routes>
+      </Routes> */}
+      {/* <Home /> */}
+      {/* <Upload /> */}
+      {/* <ImageViewer /> */}
+      {/* <Search /> */}
+      <Popup />
     </>
   )
 }
