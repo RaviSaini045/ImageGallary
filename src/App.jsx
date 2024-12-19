@@ -9,12 +9,11 @@ import ImageViewer from './components/ImageViewer'
 import Popup from './components/Popup'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
     <>
       <Navbar/>
-      {/* <Routes>
+      <Routes>
         <Route 
           path="/" 
           element={<Home/>} 
@@ -27,12 +26,12 @@ function App() {
           path="/upload"
           element={<Upload/>}
         />
-      </Routes> */}
+      </Routes>
       {/* <Home /> */}
       {/* <Upload /> */}
       {/* <ImageViewer /> */}
       {/* <Search /> */}
-      <Popup />
+      {/* <Popup /> */}
     </>
   )
 }
