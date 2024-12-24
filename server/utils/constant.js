@@ -1,1 +1,1 @@
-// import {nameDB} from 
+export const DB_NAME = "imageGallery";

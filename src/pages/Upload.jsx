@@ -1,12 +1,25 @@
 import { useState } from "react";
 import { Form, Input, Upload as AntUpload, Button } from "antd";
+import { uploadImage } from "../services/gallery.apis";
+import { useNavigate } from "react-router";
 
 const Upload = () => {
   const [title, setTitle] = useState("");
   const [imageFile, setImageFile] = useState(null);
-
+  const navigate = useNavigate();
   const handleSubmit = (values) => {
     console.log("Form Data:", values);
+    const fileObj = values.imageFile?.fileList[0]?.originFileObj;
+    const formData = new FormData();
+    formData.append("title", values.title); 
+    formData.append("image", fileObj);
+    console.log("b ", values.imageFile);
+    
+    // call here the uploadImage dunction
+    const upload = async() =>{
+      const response = await uploadImage(formData, navigate);
+    };
+    upload();
     alert("Image uploaded successfully!");
   };
 
@@ -20,7 +33,8 @@ const Upload = () => {
   return (
     <div style={{ padding: "20px", maxWidth: "400px", margin: "0 auto" }}>
       <h2 style={{ textAlign: "center" }}>Upload Image</h2>
-      <Form onFinish={handleSubmit}>
+      <Form onFinish={
+        handleSubmit}>
         <Form.Item
           label="Title"
           name="title"

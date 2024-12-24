@@ -1,5 +1,5 @@
-import { message } from "antd";
-import Gallery from "../schemas/image.schema";
+import axios from "axios";
+import Gallery from "../schemas/image.schema.js";
 
 export const fetchImages = async (req,res) => {
     try{
@@ -14,7 +14,7 @@ export const fetchImages = async (req,res) => {
 
 export const deleteImage = async (req,res) => {
     try{
-        const {id} = req.params;
+        const { id } = req.params;
         await Gallery.findByIdAndDelete(id);
         return res.status(200).json({statusCode:200,data:{},message:"Image delete Sucessfully",sucess:true});
     }
@@ -26,9 +26,11 @@ export const deleteImage = async (req,res) => {
 
 export const uploadImage = async (req,res) => {
     try{
-        const {title} = req.body;
+        const {title, imageURL: providedImageURL} = req.body;
+        console.log("szdfg ",req.file);
+        
         // when we are uploading the imgae at Amazon s3 bucket  || uploading from pixabay API
-        const imageURL = req.file.location || req.body.imageURL ;  
+        const imageURL = providedImageURL || req.file?.location;
         if(title ==null || imageURL == null )
             throw new Error("All fields are required");
 
@@ -47,3 +49,21 @@ export const uploadImage = async (req,res) => {
     }
 };
 
+export const searchImages = async(req, res) => {
+    try {
+        const { q, image_type } = req.query;
+        console.log("esrdtfykhjbnk ", q, image_type );
+        
+        if(!q || !image_type) {
+            throw new Error("Query is required");
+        }
+        // console.log("making api call" );
+        const url = `https://pixabay.com/api/?key=${process.env.PIXABAY_API_KEY}&q=${q}&image_type=${image_type}`;
+        const response = await axios.get(url);
+        // console.log("response received ", response);       
+        return res.status(200).json({statusCode: 200, data: response.data, message: "Images searched successfully"});
+    } catch (error) {
+        console.error(error.message);
+        return res.status(501).json({statusCode: 501, data: [], message: "Error while searching the images"});
+    }
+}

@@ -5,8 +5,6 @@ import {Route, Routes} from 'react-router-dom'
 import Search from './pages/Search'
 import Upload from './pages/Upload'
 import Home from './pages/Home'
-import ImageViewer from './components/ImageViewer'
-import Popup from './components/Popup'
 
 function App() {
   
@@ -27,11 +25,7 @@ function App() {
           element={<Upload/>}
         />
       </Routes>
-      {/* <Home /> */}
-      {/* <Upload /> */}
-      {/* <ImageViewer /> */}
-      {/* <Search /> */}
-      {/* <Popup /> */}
+
     </>
   )
 }

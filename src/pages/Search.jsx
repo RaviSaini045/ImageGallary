@@ -1,19 +1,22 @@
 import { useState } from "react";
-import { Input, Button, Layout, Row, Col, Select, Typography } from "antd";
+import {
+  Input,
+  Button,
+  Layout,
+  Row,
+  Col,
+  Select,
+  Typography,
+  Card,
+} from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import ImageViewer from "../components/ImageViewer";
-import { Card } from "antd";
-
-
-
-const { Content } = Layout;
-const { Option } = Select;
-const { Title } = Typography;
+import { searchImages } from "../services/gallery.apis";
 
 const SearchPage = () => {
-  const [searchedImage, setSearchedImage] = useState([]);
+  const [searchedImages, setSearchedImages] = useState([]);
   const [userQuery, setUserQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState(null);
+  const [categoryFilter, setCategoryFilter] = useState("all");
 
   const handleChange = (e) => {
     setUserQuery(e.target.value);
@@ -25,11 +28,17 @@ const SearchPage = () => {
 
   const handleSearch = () => {
     // Logic to fetch search results based on userQuery and categoryFilter
-  };
+    const getData = async () => {
+      const data = await searchImages(userQuery,{"image_type": categoryFilter});
+      setSearchedImages(data);
+    };
+    getData();
 
+  };
+  console.log("searchd images ", searchedImages);
   return (
     <Layout style={{ backgroundColor: "#d3d3d3", minHeight: "100vh" }}>
-      <Content style={{ padding: "20px" }}>
+      <Layout.Content style={{ padding: "20px" }}>
         <Row justify="center" style={{ marginBottom: "20px" }}>
           <Col xs={24} sm={18} md={12}>
             <div
@@ -65,31 +74,56 @@ const SearchPage = () => {
 
         <Row>
           {/* Filter Section */}
-          <Col md={8} >
-            <div style={{ padding: "10px", backgroundColor: "#f5a9a9", borderRadius: "8px", marginRight:"16px" }}>
-              <Title level={4}>Filter</Title>
+          <Col md={8}>
+            <div
+              style={{
+                padding: "10px",
+                backgroundColor: "#f5a9a9",
+                borderRadius: "8px",
+                marginRight: "16px",
+              }}
+            >
+              <Typography.Title level={4}>Filter</Typography.Title>
               <Select
                 placeholder="Select Category"
                 style={{ width: "100%" }}
                 onChange={handleCategoryChange}
                 value={categoryFilter}
               >
-                <Option value="nature">Nature</Option>
-                <Option value="architecture">Architecture</Option>
-                <Option value="people">People</Option>
-                <Option value="technology">Technology</Option>
+                <Select.Option value="all">All</Select.Option>
+                <Select.Option value="photo">Photo</Select.Option>
+                <Select.Option value="illustration">Illustration</Select.Option>
+                <Select.Option value="vector">Vector</Select.Option>
               </Select>
             </div>
           </Col>
 
           {/* Results Section */}
           <Col md={16}>
-            <div style={{ padding: "20px", backgroundColor: "#ffffff", borderRadius: "8px" }}>
-              <Row style={{ display: "flex", flexWrap: "wrap", gap: "40px", justifyContent: "center", padding: "10px" }}>
-                {searchedImage.length > 0 ? (
-                  searchedImage.map((imageData) => (
-                    <Col key={imageData._id} md={8} lg={6}>
-                      <ImageViewer imgURL={imageData.imgURL} />
+            <div
+              style={{
+                padding: "20px",
+                backgroundColor: "#ffffff",
+                borderRadius: "8px",
+              }}
+            >
+              <Row
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "40px",
+                  justifyContent: "center",
+                  padding: "10px",
+                }}
+              >
+                {searchedImages && searchedImages.length > 0 ? (
+                  searchedImages.map((imageData) => (
+                    <Col key={imageData._id || imageData.id} md={8} lg={6}>
+                      <ImageViewer
+                        imgURL={imageData.previewURL}
+                        title={userQuery}
+                        isPixabayimage={true}
+                      />
                     </Col>
                   ))
                 ) : (
@@ -101,7 +135,7 @@ const SearchPage = () => {
             </div>
           </Col>
         </Row>
-      </Content>
+      </Layout.Content>
     </Layout>
   );
 };
