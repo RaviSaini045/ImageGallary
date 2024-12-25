@@ -12,21 +12,35 @@ const ImageViewer = ({ id, imgURL, title, isPixabayimage }) => {
           display: "flex",
           gap: "40px",
           justifyContent: "center",
-          padding: "10px",
+          padding: "4px",
+          border: "2px solid #ccc"
         }}
         onClick={() => setImagePopup(true)}
       >
         <Card
           hoverable
-          style={{ width: 300, marginLeft: "16px", marginRight: "16px" }}
-          cover={<img alt="Image Viewer" src={imgURL} />}
-        >
-          {" "}
-        </Card>
+          style={{
+            width: 300,
+            margin:"6px",
+            textAlign: "center",
+          }}
+          cover={
+            <img
+              alt="Image Viewer"
+              src={imgURL}
+              style={{
+                width: "100%",
+                maxHeight:"150px",
+                objectFit: "cover",
+                borderRadius: "8px",
+              }}
+            />
+          }
+        />
       </div>
       {imagePopup && (
         <Popup
-           id = {id}
+          id={id}
           imageURL={imgURL}
           title={title}
           isPixabayimage={isPixabayimage}

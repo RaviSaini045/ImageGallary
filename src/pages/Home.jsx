@@ -17,7 +17,7 @@ const Home = () => {
       <div
         style={{
           padding: "20px",
-          backgroundColor: "#f0f2f5",
+          backgroundColor: "#c8c8c8",
           minHeight: "100vh",
         }}
       >
@@ -27,7 +27,7 @@ const Home = () => {
               <Col key={imageData._id} md={8} lg={6}>
                 <Card
                   hoverable
-                  style={{ borderRadius: "8px", overflow: "hidden" }}
+                  style={{ borderRadius: "8px", overflow: "hidden", margin:"12px" }}
                 >
                   <ImageViewer
                     imgURL={imageData.imageURL}

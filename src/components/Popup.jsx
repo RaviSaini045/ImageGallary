@@ -1,43 +1,87 @@
-import { Button, Card } from "antd";
+import React, { useState } from "react";
+import { Button, Modal } from "antd";
 import { useNavigate } from "react-router";
 import { uploadImage, deleteImage } from "../services/gallery.apis";
-const Popup = ({id,imageURL , title, isPixabayimage}) => {
 
+const Popup = ({ id, imageURL, title, isPixabayimage }) => {
+  const [isModalOpen, setIsModalOpen] = useState(true); // Popup opens directly when component is rendered
   const navigate = useNavigate();
-  
+
+  const handleCancel = () => {
+    setIsModalOpen(false); // Close popup
+  };
+
   const UploadDelete = () => {
     if (isPixabayimage) {
-      const uploadData = {title, imageURL};
-      uploadImage(uploadData,navigate);
+      const uploadData = { title, imageURL };
+      uploadImage(uploadData, navigate);
     } else {
-      deleteImage(id,navigate);
+      deleteImage(id, navigate);
     }
+    setIsModalOpen(false); 
   };
+
   return (
-    <div style={{ padding: "20px", minHeight: "100vh" }}>
-      <Card style={{ maxWidth: "400px", margin: "0 auto", textAlign: "center", borderRadius: "8px", opacity:"60%",backgroundColor: "black" }} >
-        <div style={{ marginBottom: "16px",color:"white" }}>
-          {/* <h3>{imageData.title}</h3> */}
-          <h3>Title :  {title}</h3>
+    <>
+      <Modal
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={null}
+        centered
+        bodyStyle={{
+          textAlign: "center",
+          padding: "20px",
+          backgroundColor: "black",
+          borderRadius: "8px",
+        }}
+        closeIcon={
+          <div
+            style={{
+              width: "30px",
+              height: "30px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "16px",
+              color: "#000", 
+              backgroundColor: "#fff", 
+              border: "1px solid #ccc",
+              borderRadius: "50%",
+              cursor: "pointer",
+            }}
+          >
+            ✖
+          </div>
+        }
+        
+      >
+        <div style={{ color: "white", marginBottom: "16px" }}>
+          <h3>Title: {title}</h3>
         </div>
         <div>
-            <img 
-            alt="image" 
-              src={imageURL} 
-            style={{ width: "50px", height: "50px", borderRadius: "8px", marginBottom: "16px" }} 
-            />
+          <img
+            alt="image"
+            src={imageURL}
+            style={{
+              width: "75px",
+              height: "75px",
+              borderRadius: "8px",
+              marginBottom: "16px",
+            }}
+          />
         </div>
         <div>
-            <Button 
-            type="primary" 
+          <Button
+            type="primary"
             danger
-            onClick={UploadDelete}  // delete functionality
-            >
+            onClick={UploadDelete}
+            style={{ marginBottom: "16px" }}
+          >
             {isPixabayimage ? "Upload" : "Delete"}
-            </Button>
+          </Button>
         </div>
-      </Card>
-    </div>
+      </Modal>
+    </>
   );
 };
 

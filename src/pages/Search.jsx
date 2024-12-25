@@ -73,7 +73,6 @@ const SearchPage = () => {
         </Row>
 
         <Row>
-          {/* Filter Section */}
           <Col md={8}>
             <div
               style={{
@@ -98,7 +97,6 @@ const SearchPage = () => {
             </div>
           </Col>
 
-          {/* Results Section */}
           <Col md={16}>
             <div
               style={{
