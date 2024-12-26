@@ -54,7 +54,7 @@ Follow the steps below to set up and run the project locally:
 ### Frontend Setup
 1. Clone the repository:
    ```bash
-   git clone [repo url]
+   git clone https://github.com/RaviSaini045/ImageGallery.git
 2. Navigate to the project folder and install dependencies:
    ```bash
    npm install
@@ -63,6 +63,6 @@ Follow the steps below to set up and run the project locally:
    npm run dev
 ### Backend Setup
    ```bash
-   cd [server]
+   cd server
    npm install
    npm run dev
