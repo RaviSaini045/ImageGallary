@@ -2,6 +2,11 @@
 
 This project is a photo gallery application that allows users to upload, view, and delete images. Additionally, users can search for images using the Pixabay API, displaying results in a grid layout. The application is built using React and styled with Ant Design (antd) components.
 
+## Deployed URL 
+1. Frontend
+     ```bash
+     https://image-gallery-chi-mocha.vercel.app/
+     
 ## Features
 
 ### Functional Features
