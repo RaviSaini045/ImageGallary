@@ -5,11 +5,16 @@ import { fetchImages } from "../services/gallery.apis";
 
 const Home = () => {
   useEffect(() => {
-    
-    return async () => {
-		const data = await fetchImages();
-		setGalleryData(data);
+    const fetchData = async () => {
+      try {
+        const data = await fetchImages();
+        setGalleryData(data);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
     };
+  
+    fetchData();
   }, []);
   const [galleryData, setGalleryData] = useState([]);
   return (
