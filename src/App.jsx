@@ -7,7 +7,7 @@ import Upload from './pages/Upload'
 import Home from './pages/Home'
 
 function App() {
-  
+  console.log(import.meta.env.VITE_SERVER_URL);
   return (
     <>
       <Navbar/>
